@@ -10,3 +10,12 @@ var subActionPanel = {
 	color: "#ffffff"
 	// marginLeft: "-15px"
 };
+
+var tripleStyle = {
+	// backgroundColor: "#E0F4FF",
+	marginBottom: "20px",
+	paddingTop: "16px",
+	paddingBottom: "16px",
+	borderBottom: "solid 1px #D5F0DF"
+
+};

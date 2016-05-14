@@ -21,5 +21,12 @@ body {
 	max-height: 100vh;
 	overflow-y: scroll;
 	overflow-x: hidden;
-	background: #E0F4FF;
+	background: #FFFFFF;
+}
+
+textarea {
+	border: solid 2px #70DB93;
+	border-radius: 4px;
+	width: 90%;
+	padding: 4px;
 }

@@ -98,7 +98,7 @@ var Triple = React.createClass({
 		var t = this.props.triple;
 
 		return (
-			<div className="row">
+			<div className="row" style={tripleStyle}>
 				<div className="col-sm-12">
 					<div className="row">
 						<div className="col-sm-12">
@@ -115,7 +115,7 @@ var Triple = React.createClass({
 								</div>
 
 								<div className="form-group">
-								    <label className="control-label col-sm-2" for="">Rating</label>
+								    <label className="control-label col-sm-2" for="">Grade</label>
 								    <div className="col-sm-10">
 								    	<Slider />
 								    </div>
