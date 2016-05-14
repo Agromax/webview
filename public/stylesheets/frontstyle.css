@@ -1,0 +1,25 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+@import url(https://fonts.googleapis.com/css?family=Ubuntu);
+
+body {
+	font-family: 'Ubuntu', sans-serif;
+}
+
+.greenish {
+	color: #70DB93;
+}
+
+.action-btn {
+	font-size: 1.0em;
+	border: solid 2px;
+	border-color: #70DB93;
+	margin-bottom: 12px;
+}
+
+.right-panel {
+	height: 100vh;
+	max-height: 100vh;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	background: #E0F4FF;
+}

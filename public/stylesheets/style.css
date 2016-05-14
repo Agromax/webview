@@ -1,0 +1,33 @@
+.slider {
+}
+
+.rating-value {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	border-radius: 40px;
+	line-height: 28px;
+	border: solid 2px #70DB93;
+	text-align: center;
+	margin-right: 2px;
+	color: #70DB93;
+	cursor: pointer;
+	font-size: 11px;
+}
+
+.rating-value-active {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	border-radius: 40px;
+	line-height: 28px;
+	border: solid 2px #70DB93;
+	text-align: center;
+	margin-right: 2px;
+	color: #ffffff;
+	cursor: pointer;
+	background: #70DB93;
+	font-size: 11px;
+
+}
+

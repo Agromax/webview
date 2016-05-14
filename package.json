@@ -1,0 +1,23 @@
+{
+  "name": "sync_web",
+  "version": "1.0.0",
+  "description": "web backend for sync media player",
+  "main": "start.js",
+  "scripts": {
+    "test": "node start"
+  },
+  "author": "Anurag Gautam",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "crypto": "0.0.3",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "express-ws": "^2.0.0-rc.1",
+    "jade": "^1.11.0",
+    "mysql": "^2.10.2",
+    "promise": "^7.1.1",
+    "random-js": "^1.0.8",
+    "sequelize": "^3.23.0"
+  }
+}

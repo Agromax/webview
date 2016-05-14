@@ -1,0 +1,11 @@
+extends ./layout.jade
+
+block content
+	h2 List of currently active race(s)
+	if races
+		ul(class='nav nav-pills')
+			each race in races
+				li
+					a(href="#")= race.location + ' starting at ' + race.startsAt
+	else
+		h3 Sorry no active races right now, check back later

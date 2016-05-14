@@ -1,0 +1,23 @@
+doctype html
+html(lang="en")
+	head
+		title= pageTitle
+		link(rel="stylesheet", href="/stylesheets/bootstrap.css")
+		link(rel="stylesheet", href="/stylesheets/style.css")
+		script(src="/javascripts/jquery-1.12.3.js")
+		script(src="/javascripts/bootstrap.min.js")
+	body
+		div.page-header
+			div(class="nav nav-pills")
+				if user
+					li 
+						a(href="")= 'Hi, ' + user.name
+					li
+						a(href="#") Play
+					li
+						a(href="/logout") Logout
+				else
+					li 
+						a(href="#") Hey there, how you doin?
+		block content
+
