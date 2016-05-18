@@ -6,6 +6,8 @@ var expressWs = require('express-ws')(app);
 var crypto = require('crypto');
 
 var models = require('./lib/models');
+var vcRoute = require('./routes/vcRoutes.js');
+
 
 app.use(session({
 	secret: 'keyboard cat',
@@ -18,6 +20,8 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Handles all the version controller API
+app.use('/vc', vcRoute);
 
 app.get('/rdfui', function(req, res, next) {
 	res.render('rdfui', {pageTitle: 'Let it rain over me'});
