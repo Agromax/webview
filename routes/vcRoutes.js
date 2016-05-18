@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var connect = require('../lib/vc').connect;
+var ObjectID = require('mongodb').ObjectID;
 
 var router = express.Router();
 
@@ -47,5 +48,36 @@ router.get('/versions', function(req, res, next) {
 		}
 	});
 });
+
+router.get('/version', function(req, res, next) {
+	var versionId = req.query.id;
+	connect(function(db) {
+		if(db) {
+			var store = db.collection('triple_store');
+			var objId = new ObjectID(versionId);
+
+			store.find({"_id": objId}).toArray(function(err, docs) {
+				if(err) {
+					res.json({
+						code: -1,
+						msg: err
+					});
+				} else {
+					res.json({
+						code: 0,
+						msg: docs
+					});
+				}
+			});
+		} else {
+			res.json({
+				code: -1,
+				msg: 'Could not connect to the database.'
+			});
+		}
+	});
+});
+
+
 
 module.exports = router;
