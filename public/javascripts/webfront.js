@@ -20,9 +20,11 @@ var VerticalSubActionsList = React.createClass({
 
 
 		var actions = [];
-		for(var i=0; i<5; i++) {
+		for(var i=0; i<this.props.versions.length; i++) {
 			actions.push(
-				<li><a href="" style={aStyle}>{'Version-'+i}</a></li>
+				<li><a 
+					style={aStyle}
+					onClick={this.props.onVersionSelected}>{this.props.versions[i].id}</a></li>
 			);
 		}
 		
@@ -32,9 +34,6 @@ var VerticalSubActionsList = React.createClass({
 					<ul className="nav nav-pills nav-stacked">
 						<li>
 							<a href="#" style={aStyle}>Report</a>
-						</li>
-						<li style={activeStyle}>
-							<a href="#" style={aStyle}>Current Version</a>
 						</li>
 						{actions}
 					</ul>
@@ -77,6 +76,25 @@ var VerticalActionsList = React.createClass({
 });
 
 var LeftPanel = React.createClass({
+	getInitialState: function() {
+		return {versions: []};
+	},
+	componentDidMount: function() {
+		var self = this;
+
+ 		setInterval(function() {
+ 			console.log('Pinging for newer versions at: ' + self.props.versionUrl);
+ 			$.get(self.props.versionUrl, function(data) {
+ 				self.setState(function(prevState, curProps) {
+ 					if(data.code === 0) {
+ 						return {versions: data.msg['ids']};
+ 					} else {
+ 						console.warn(data);
+ 					}
+ 				});
+ 			});
+ 		}, 5000); 
+	},
 	render: function() {
 		return (
 			<div className="row">
@@ -84,7 +102,7 @@ var LeftPanel = React.createClass({
 					<VerticalActionsList />
 				</div>
 				<div className="col-sm-10">
-					<VerticalSubActionsList />
+					<VerticalSubActionsList versions={this.state.versions} onVersionSelected={this.props.onVersionSelected} />
 				</div>
 			</div>
 		);
@@ -108,7 +126,7 @@ var Triple = React.createClass({
 								    <div className="col-sm-10">
 								    	<div className="row">
 									    	<div className="col-sm-4">{t.sub}</div>
-											<div className="col-sm-4">{t.pred}</div>
+											<div className="col-sm-4">{t.pre}</div>
 											<div className="col-sm-4">{t.obj}</div>
 										</div>
 								    </div>
@@ -156,9 +174,10 @@ var RightPanel = React.createClass({
 		var ts = {sub: 'Indian whete ksjfksfdkhfd jhf hfjh fjdhfj hdjfhdjh fjdhfjdhf jdhf jdhf jdhf jdhfdjjjjjjjjjjjjjjjjjjjjjjjjfhdjhf jdhfjdhf djfhj hdjfhj hdjfh', pred: 'wheet-bla-bla-bla-bla-foo+-bar', obj: 'tastes_sweet'}
 		var triplets = [];
 
-		for(var i=0; i<10; i++) {
+
+		for(var i=0; i<this.props.triplets.length; i++) {
 			triplets.push(
-				<Triple triple={ts} />
+				<Triple triple={this.props.triplets[i]} id={this.props.triplets[i]['_id']} />
 			);
 		}
 
@@ -172,15 +191,33 @@ var RightPanel = React.createClass({
 
 
 var Dashboard = React.createClass({
+	getInitialState: function() {
+		return {triplets: []};
+	},
+	onVersionSelected: function(vId) {
+		console.warn(JSON.stringify(vId.target.innerHTML));
+		var versionId = vId.target.innerHTML;
+		var self = this;
+		$.get('http://localhost:3000/vc/version?id='+versionId, function(data) {
+			if(data) {
+				console.warn(JSON.stringify(data.msg));
+				self.setState(function(cs, curProps) {
+					return {triplets: data.msg.triplets};
+				});
+			} else {
+				console.warn('No data found');
+			}
+ 		});	
+	},
 	render: function() {
 		return (
 			<div className="container-fluid">
 				<div className='row'>
 					<div className="col-md-3" style={leftPanel}>
-						<LeftPanel />
+						<LeftPanel versionUrl='http://localhost:3000/vc/versions' onVersionSelected={this.onVersionSelected} />
 					</div>
 					<div className="col-md-9">
-						<RightPanel />
+						<RightPanel triplets={this.state.triplets}/>
 					</div>
 				</div>				
 			</div>

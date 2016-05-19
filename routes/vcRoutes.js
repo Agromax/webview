@@ -49,6 +49,7 @@ router.get('/versions', function(req, res, next) {
 	});
 });
 
+
 router.get('/version', function(req, res, next) {
 	var versionId = req.query.id;
 	connect(function(db) {
@@ -56,7 +57,7 @@ router.get('/version', function(req, res, next) {
 			var store = db.collection('triple_store');
 			var objId = new ObjectID(versionId);
 
-			store.find({"_id": objId}).toArray(function(err, docs) {
+			store.findOne({"_id": objId}, function(err, docs) {
 				if(err) {
 					res.json({
 						code: -1,
@@ -78,6 +79,92 @@ router.get('/version', function(req, res, next) {
 	});
 });
 
+
+router.post('/grade2', function(req, res, next ) {
+	var versionId = req.body.version;
+	var tripleId = req.body.triple;
+	connect(function(db) {
+		if(db) {
+			var store = db.collection('triple_store');
+			store.aggregate([{
+				$project: { 
+					"triplets" : {
+						$filter: {
+							input: "$triplets",
+							as: "t",
+							cond: {
+								$eq: [
+									"$$t._id",
+									tripleId
+								]
+							}
+						}
+					}
+				}
+			}]).toArray(function(err, rec) {
+				if(err) {
+					res.json({
+						code: -1,
+						msg: err
+					});
+				} else {
+					res.json({
+						code: 0,
+						msg: rec[0].triplets[0]
+					});
+				}
+			});
+		} else {
+			res.json({
+				code: -1,
+				msg: 'Could not connect to the database'
+			});
+		}
+	});
+});
+
+router.post('/grade', function(req, res, next) {
+	var versionId = req.body.version;
+	var tripleId = req.body.triple;
+	connect(function(db) {
+		if(db) {
+			var store = db.collection('triple_store');
+			store.findOne({
+				"_id": new ObjectID(versionId)
+			}, function(err, rec) {
+				if(err) {
+					res.json({
+						code: -1,
+						msg: err
+					});
+				} else {
+					var found = null;
+					rec.triplets.forEach(function(t) {
+						if(t["_id"] === tripleId) {
+							found = t;
+						}
+					})
+					if(found) {
+						res.json({
+							code: 0,
+							msg: found
+						});
+					} else {
+						res.json({
+							code: -1,
+							msg: 'Not found any triple with the given id'
+						});
+					}
+				}
+			});
+		} else {
+			res.json({
+				code: -1,
+				msg: 'Could not connect to the database'
+			});
+		}
+	});
+});
 
 
 module.exports = router;
