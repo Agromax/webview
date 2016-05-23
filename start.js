@@ -7,6 +7,7 @@ var crypto = require('crypto');
 
 var models = require('./lib/models');
 var vcRoute = require('./routes/vcRoutes.js');
+var userRoute = require('./routes/userRoutes.js');
 
 
 app.use(session({
@@ -22,6 +23,8 @@ app.use(bodyParser.json());
 
 // Handles all the version controller API
 app.use('/vc', vcRoute);
+app.use('/users', userRoute);
+
 
 app.get('/rdfui', function(req, res, next) {
 	res.render('rdfui', {pageTitle: 'Let it rain over me'});
@@ -29,6 +32,7 @@ app.get('/rdfui', function(req, res, next) {
 		next();
 	}
 });
+
 
 app.get('/dashboard', function(req, res, next) {
 	res.render('dashboard', {pageTitle: 'Dashboard'});

@@ -79,6 +79,7 @@ router.get('/version', function(req, res, next) {
 	});
 });
 
+
 router.get('/help', function(req, res, next) {
 	var cmd = req.query.route;
 	if(cmd === 'grade') {
@@ -148,6 +149,10 @@ router.post('/grade', function(req, res, next ) {
 	});
 });
 
+
+router.post('/feedback', function(req, res, next) {
+	
+});
 
 
 module.exports = router;
