@@ -1,3 +1,256 @@
 {
-	
+        "ts" : 1463481293763,
+        "triplets" : [
+                {
+                        "_id" : "5739db16253bff4ccf8953f4",
+                        "sub" : "s:pkm-1_yield",
+                        "pre" : "p:is",
+                        "obj" : "30-35_tonnes/ha",
+                        "grade" : [
+                                {
+                                        "user" : 4072,
+                                        "val" : 8
+                                }
+                        ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf8953f5",
+                        "sub" : "s:co-2_fruits",
+                        "pre" : "p:are",
+                        "obj" : "flat_with_furrows",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf8953f6",
+                        "sub" : "s:co-2",
+                        "pre" : "p:is",
+                        "obj" : "indeterminate_variety",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf8953f7",
+                        "sub" : "s:paiyur-1",
+                        "pre" : "p:is",
+                        "obj" : "variety_evolved",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf8953f8",
+                        "sub" : "s:paiyur-1",
+                        "pre" : "p:is",
+                        "obj" : "suitable_for_rainfed_cultivation",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf8953f9",
+                        "sub" : "s:co-1_yield",
+                        "pre" : "p:is",
+                        "obj" : "25_tonnes/ha",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf8953fa",
+                        "sub" : "s:coth-1",
+                        "pre" : "p:is",
+                        "obj" : "hybrid_between_iihr-709_le-812",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf8953fb",
+                        "sub" : "s:coth-2_fruits",
+                        "pre" : "p:are",
+                        "obj" : "smooth_round",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf8953fc",
+                        "sub" : "s:pkm-1_fruits",
+                        "pre" : "p:are",
+                        "obj" : "flat_round",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf8953fd",
+                        "sub" : "s:co-3_plants",
+                        "pre" : "p:are",
+                        "obj" : "semi_determinate",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf8953fe",
+                        "sub" : "s:co-3_plants",
+                        "pre" : "p:are",
+                        "obj" : "suitable_for_high_density_planting",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf8953ff",
+                        "sub" : "s:co-2_yield",
+                        "pre" : "p:is",
+                        "obj" : "28-30_tonnes/ha",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf895400",
+                        "sub" : "s:co-1_fruits",
+                        "pre" : "p:are",
+                        "obj" : "round_without_grooves",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf895401",
+                        "sub" : "s:co-3",
+                        "pre" : "p:is",
+                        "obj" : "hybrid_between_hn-2_cln-2123a",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf895402",
+                        "sub" : "s:co-3",
+                        "pre" : "p:is",
+                        "obj" : "high",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf895403",
+                        "sub" : "s:co-3",
+                        "pre" : "p:is",
+                        "obj" : "induced_mutant",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf895404",
+                        "sub" : "s:co-3",
+                        "pre" : "p:is",
+                        "obj" : "determinate_variety",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf895405",
+                        "sub" : "s:co-3",
+                        "pre" : "p:is",
+                        "obj" : "suitable_for_close_planting",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf895406",
+                        "sub" : "s:coth-2",
+                        "pre" : "p:is",
+                        "obj" : "hybrid_between_lcr-2_cln-2123a",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf895407",
+                        "sub" : "s:coth-2",
+                        "pre" : "p:has",
+                        "obj" : "resistance_to_leaf_curl_virus_disease",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf895408",
+                        "sub" : "s:coth-2",
+                        "pre" : "p:has",
+                        "obj" : "pesticide_spray",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf895409",
+                        "sub" : "s:coth-2",
+                        "pre" : "p:recorded",
+                        "obj" : "resistance_to_leaf_curl_virus_disease",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf89540a",
+                        "sub" : "s:coth-2",
+                        "pre" : "p:recorded",
+                        "obj" : "pesticide_spray",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf89540b",
+                        "sub" : "s:coth-2",
+                        "pre" : "p:recorded",
+                        "obj" : "yield_of_t/ha",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf89540c",
+                        "sub" : "s:coth-1_fruits",
+                        "pre" : "p:are",
+                        "obj" : "acidic",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf89540d",
+                        "sub" : "s:co-1",
+                        "pre" : "p:is",
+                        "obj" : "semi_determinate_variety",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf89540e",
+                        "sub" : "s:co-3_fruits",
+                        "pre" : "p:are",
+                        "obj" : "smooth_round",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf89540f",
+                        "sub" : "s:co-3_fruits",
+                        "pre" : "p:are",
+                        "obj" : "medium_sized",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf895410",
+                        "sub" : "s:co-3_fruits",
+                        "pre" : "p:are",
+                        "obj" : "borne_in_clusters",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                },
+                {
+                        "_id" : "5739db16253bff4ccf895411",
+                        "sub" : "s:pkm-1",
+                        "pre" : "p:is",
+                        "obj" : "induced_mutant",
+                        "grade" : [ ],
+                        "avgGrade" : 0
+                }
+        ],
+        "grade" : [
+                {
+                        "user" : 4072,
+                        "val" : 8
+                }
+        ]
 }

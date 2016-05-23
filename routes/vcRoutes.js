@@ -79,41 +79,66 @@ router.get('/version', function(req, res, next) {
 	});
 });
 
+router.get('/help', function(req, res, next) {
+	var cmd = req.query.route;
+	if(cmd === 'grade') {
+		res.json({
+			code: 0,
+			msg: 'Updates the grade of the given triple. Takes version, triple and grade as parameter'
+		});
+	}
+	else {
+		res.json({
+			code: 0,
+			msg: 'Unknown command'
+		});
+	}
+});	
 
-router.post('/grade2', function(req, res, next ) {
+
+router.post('/grade', function(req, res, next ) {
 	var versionId = req.body.version;
 	var tripleId = req.body.triple;
+	var gradeVal = parseInt(req.body.gradeVal);
+
 	connect(function(db) {
 		if(db) {
 			var store = db.collection('triple_store');
-			store.aggregate([{
-				$project: { 
-					"triplets" : {
-						$filter: {
-							input: "$triplets",
-							as: "t",
-							cond: {
-								$eq: [
-									"$$t._id",
-									tripleId
-								]
+			try {
+				store.findOne({
+					"_id": ObjectID(versionId)
+				}, function(err, records) {
+					if(err) {
+						console.error(err);
+						res.json({code: -1, msg: err});
+						return;
+					}
+					if(!records) {
+						res.json({code: -1, msg: 'No record found with id:' + versionId});
+						return;
+					}
+					var triple = records.triplets.find(elem => elem["_id"] === tripleId);
+					if(triple) {
+						var grade = triple.grade;
+						grade.push({user: 'admin', val: gradeVal});
+						store.updateOne({"_id": ObjectID(versionId)}, {
+							$set: {
+								triplets: records.triplets
 							}
-						}
+						}, function(err, done) {
+							if(err) {
+								console.warn(err);
+								res.json({code: -1, msg: err});
+								return;
+							}
+							res.json({code: 0, msg: 'Booyah! I did it'});
+						});
 					}
-				}
-			}]).toArray(function(err, rec) {
-				if(err) {
-					res.json({
-						code: -1,
-						msg: err
-					});
-				} else {
-					res.json({
-						code: 0,
-						msg: rec[0].triplets[0]
-					});
-				}
-			});
+
+				});
+			} catch(err) {
+				res.json({code: -1, msg: err});
+			}
 		} else {
 			res.json({
 				code: -1,
@@ -123,48 +148,6 @@ router.post('/grade2', function(req, res, next ) {
 	});
 });
 
-router.post('/grade', function(req, res, next) {
-	var versionId = req.body.version;
-	var tripleId = req.body.triple;
-	connect(function(db) {
-		if(db) {
-			var store = db.collection('triple_store');
-			store.findOne({
-				"_id": new ObjectID(versionId)
-			}, function(err, rec) {
-				if(err) {
-					res.json({
-						code: -1,
-						msg: err
-					});
-				} else {
-					var found = null;
-					rec.triplets.forEach(function(t) {
-						if(t["_id"] === tripleId) {
-							found = t;
-						}
-					})
-					if(found) {
-						res.json({
-							code: 0,
-							msg: found
-						});
-					} else {
-						res.json({
-							code: -1,
-							msg: 'Not found any triple with the given id'
-						});
-					}
-				}
-			});
-		} else {
-			res.json({
-				code: -1,
-				msg: 'Could not connect to the database'
-			});
-		}
-	});
-});
 
 
 module.exports = router;
