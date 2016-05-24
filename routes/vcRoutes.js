@@ -32,32 +32,23 @@ router.get('/versions', function(req, res, next) {
 });
 
 
+/** 
+Returns the details of individual version
+*/
 router.get('/version', function(req, res, next) {
 	var versionId = req.query.id;
-	connect(function(db) {
-		if(db) {
-			var store = db.collection('triple_store');
-			var objId = new ObjectID(versionId);
-
-			store.findOne({"_id": objId}, function(err, docs) {
-				if(err) {
-					res.json({
-						code: -1,
-						msg: err
-					});
-				} else {
-					res.json({
-						code: 0,
-						msg: docs
-					});
-				}
-			});
-		} else {
+	Schema.VersionControl.findById(versionId, function(err, record) {
+		if(err) {
 			res.json({
 				code: -1,
-				msg: 'Could not connect to the database.'
+				msg: err
 			});
+			return;
 		}
+		res.json({
+			code: 0,
+			msg: record
+		});
 	});
 });
 
@@ -79,62 +70,74 @@ router.get('/help', function(req, res, next) {
 });	
 
 
+/**
+Updates the grade of an individual triple
+*/
 router.post('/grade', function(req, res, next ) {
+	var VC = Schema.VersionControl;
+	var User = Schema.User;
+
 	var versionId = req.body.version;
 	var tripleId = req.body.triple;
-	var gradeVal = parseInt(req.body.gradeVal);
+	var gradeVal = parseInt(req.body.grade);
+	var token = req.body.token;
 
-	connect(function(db) {
-		if(db) {
-			var store = db.collection('triple_store');
-			try {
-				store.findOne({
-					"_id": ObjectID(versionId)
-				}, function(err, records) {
+	User.find({token: token}, function(err, docs) {
+		if(err) {
+			res.json({
+				code: -1,
+				msg: err
+			});
+			return;
+		}
+
+		var user = docs[0];
+		if(user.isValidToken(token)) {
+			VC.findById(versionId, function(err, version) {
+				var triple = version.triplets.id(tripleId);
+				var marks = triple.grades.find(function(u){return u.user === user["_id"];});
+
+				console.log("marks => ", marks);
+				if(!marks) {
+					marks = {user: user.id, grade: gradeVal};
+					triple.grades.push(marks);
+				} else {
+					marks['grade'] = gradeVal;
+				}
+
+				console.log(marks);
+
+
+				version.save(function(err, v) {
 					if(err) {
-						console.error(err);
-						res.json({code: -1, msg: err});
-						return;
-					}
-					if(!records) {
-						res.json({code: -1, msg: 'No record found with id:' + versionId});
-						return;
-					}
-					var triple = records.triplets.find(elem => elem["_id"] === tripleId);
-					if(triple) {
-						var grade = triple.grade;
-						grade.push({user: 'admin', val: gradeVal});
-						store.updateOne({"_id": ObjectID(versionId)}, {
-							$set: {
-								triplets: records.triplets
-							}
-						}, function(err, done) {
-							if(err) {
-								console.warn(err);
-								res.json({code: -1, msg: err});
-								return;
-							}
-							res.json({code: 0, msg: 'Booyah! I did it'});
+						res.json({
+							code: -1,
+							msg: err
 						});
+						return;
 					}
-
+					res.json({
+						code: 0,
+						msg: 'Grade for triple with id=' + triple.id + ' updated to:' + gradeVal  
+					});
 				});
-			} catch(err) {
-				res.json({code: -1, msg: err});
-			}
+			});
 		} else {
 			res.json({
 				code: -1,
-				msg: 'Could not connect to the database'
+				msg: 'Behold unauthorized user! your token has expire'
 			});
 		}
 	});
 });
 
 
+/**
+Updates the feedback given by the domain expert on the given triple
+*/
 router.post('/feedback', function(req, res, next) {
 	
 });
-
+ 	
 
 module.exports = router;
