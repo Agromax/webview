@@ -1,6 +1,6 @@
 import random
 import json
-
+'''
 names = ["Black Jack",  "Black Belle",  "Black Rose",  "Panther",  "Dark Star",  "Zorro",  "Blackie",  "Onyx",  "Ebony",  "Midnight",  "Black Beauty",  "Shadow",  "Eclipse",  "Smoky",  "Inky",  "Indigo",  "Stormy",  "Raven",  "Bud",  "Buddy",  "Amigo",  "Murphy",  "Charlie",  "Waldo",  "Cisco",  "Mac",  "Wilber",  "Toby",  "Ed",  "Sherman",  "Rosco",  "Chester",  "Barney",  "Chico",  "Festus",  "Shadowfax",  "Flicka",  "Dreamer",  "Copper",  "coppersmith",  "CopperPenny",  "Penny",  "Red Man",  "Ginger",  "Rojo",  "Scarlett",  "Red Baron",  "Rusty",  "Ruby",  "Nutmeg",  "Cherry"]
 names = map(lambda x: x.lower().strip(), names)
 
@@ -28,3 +28,27 @@ for h in horses:
 
 with open('horse_data.json', 'w') as fd:
 	fd.write(json.dumps(horses))
+'''
+
+def main():
+	n, s = raw_input(), raw_input()
+	q = int(raw_input())
+	
+	count = {}
+	for c in s:
+		if c in count:
+			count[c] += 1
+		else:
+			count[c] = 1
+
+	for i in xrange(q):
+		x, y = raw_input().split()
+		nx, ny = 0, 0
+		if x in count:
+			nx = count[x]
+		if y in count:
+			ny = count[y]
+		print nx * ny
+
+
+main()
