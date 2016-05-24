@@ -1,51 +1,33 @@
 var express = require('express');
 var path = require('path');
-var connect = require('../lib/vc').connect;
+var Schema = require('../lib2/schema');
 var ObjectID = require('mongodb').ObjectID;
 
 var router = express.Router();
 
 router.get('/', function (req, res, next) {
-	res.send('Hello FROM vc');
+	res.send('Welcome, this is version controller router');
 });
 
+/**
+Returns the list of all the versions available
+*/
 router.get('/versions', function(req, res, next) {
-	connect(function(db) {
-		if(db) {
-			var store = db.collection('triple_store');
-			store.find({}).toArray(function(err, docs) {
-				if(err) {
-					console.log(err);
-					res.json({
-						code: -1,
-						msg: err,
-					});
-				} else {
-					var vIds = [];
-					docs.forEach(function(v) {
-						vIds.push({
-							id: v._id,
-							ts: v.ts
-						});
-					});
-
-					res.json({
-						code: 0,
-						msg: {
-							count: docs.length,
-							ids: vIds
-						}
-					});
-				}
-
-			});
-		} else {
-			console.warn('Something went wrong. Could not connect to the database');
+	var VC = Schema.VersionControl;
+	VC.find({}, function(err, versions) {
+		if(err) {
+			console.error(err);
 			res.json({
 				code: -1,
-				msg: 'Something went wrong. Could not connect to the database'
+				msg: 'Error occurred while downloading the list of verisons'
 			});
+			return;
 		}
+
+		res.json({
+			code: 0,
+			msg: versions
+		});
 	});
 });
 

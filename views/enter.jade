@@ -3,24 +3,14 @@ extends ./layout.jade
 block content
 	div.container
 		div.row
-			div(class="col-md-4 col-md-offset-2")
-				h3 New user? Sign up
-				form(action='/Signup', method='POST', role='form')
+			div(class="col-md-4 col-md-offset-4")
+				h3 Please enter your credentials
+				form(action='/users/signin', method='POST', role='form')
 					div.form-group
-						input(type='text', name='name', class='form-control', placeholder='Your name')
+						label Username:
+						input(type='text', name='user', class='form-control', placeholder='Username')
 					div.form-group
-						input(type='email', name='email', class='form-control', placeholder='Your email')
-					div.form-group
-						input(type='password', name='pwd', class='form-control', placeholder='Choose a strong password')
-					div.form-group
-						input(type='submit', value='Sign up', class='btn btn-success')
-
-			div(class="col-md-4")
-				h3 Old user? Sign in here
-				form(action='/signin', method='POST', role='form')
-					div.form-group
-						input(type='email', name='email', class='form-control', placeholder='Email')
-					div.form-group
+						label Password:
 						input(type='password', name='pwd', class='form-control', placeholder='Password')
 					div.form-group
 						input(type='submit', value='Sign in', class='btn btn-success')

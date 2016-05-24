@@ -3,41 +3,57 @@ var path = require('path');
 var connect = require('../lib/vc').connect;
 var ObjectID = require('mongodb').ObjectID;
 var crypto = require('crypto');
+var User = require('../lib2/schema.js').User;
+var hash = require('../lib2/hash');
 
 
 var router = express.Router();
 
 router.get('/', function (req, res, next) {
-	res.send('Hello FROM user controller');
+	res.render('enter', {pageTitle: 'Sign In Here'});
 });
+
 
 router.post('/signin', function(req, res, next) {
 	var username = req.body.user;
-	var password = req.body.password;
+	var password = req.body.pwd;
 
-	var shaSum = crypto.createHash('sha1');
-	shaSum.update(password);
-
-	connect(function(db) {
-		if(db) {
-			var store = db.users;
-			store.findOne({"username": username, password: shaSum.digest('hex')}, function(err, u) {
-				if(err) {
-					console.error(err);
-					res.send('Not found');
-					return;
-				}
-
-				if(u) {
-					
-				}
+	User.find({username: username, password: hash(password)}, function(err, users) {
+		if(err) {
+			res.json({
+				code: -1,
+				msg: 'Error occurred while authenticating, please try again later'
 			});
-
-		} else {
-			res.send('Could not connect to the database');
+			return;
 		}
+
+		if(users.length === 1) {
+			var user = users[0];
+			var token = user.getToken();
+			user.token = token['token'];
+			user.expires = token['expires'];
+
+			user.save(function(err, u) {
+				res.json({
+					code: 0,
+					msg: {
+						text: 'Authenticated',
+						id: u['_id'],
+						authToken: u.token
+					}
+				});
+			});
+		} else {
+			res.json({
+				code: -1,
+				msg: 'Could not authorize. Incorrect username or password'
+			});
+		}
+
 	});
 
 });
 
+
+module.exports = router;
 
