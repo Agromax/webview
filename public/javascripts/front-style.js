@@ -1,12 +1,12 @@
 var leftPanel = {
 	backgroundColor: "#FFFFFF",
 	color: "#FFFFFF",
-	height: "100vh"
+	height: "90vh"
 };
 
 var subActionPanel = {
 	backgroundColor: "#70DB93",
-	height: "100vh",
+	height: "90vh",
 	color: "#ffffff"
 	// marginLeft: "-15px"
 };
@@ -18,4 +18,13 @@ var tripleStyle = {
 	paddingBottom: "16px",
 	borderBottom: "solid 1px #D5F0DF"
 
+};
+
+var headerStyle = {
+	// backgroundColor: '#54B274', //'#70DB93',
+	color: '#70DB93', //'#54B274',
+	paddingLeft: '16px',
+	zIndex: 1000,
+	height: '10vh',
+	boxShadow: '0px 0px 4px #ccc'
 };

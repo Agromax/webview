@@ -14,6 +14,9 @@ var VC = Schema.VersionControl;
 Just a helper function 
 */
 function _url(name) {
+	if(name.startsWith('/')) {
+		name = name.substring(1);
+	}
 	return '/app/' + name;
 }
 
@@ -30,18 +33,16 @@ router.get('/', function (req, res, next) {
 
 router.get('/dashboard', function(req, res, next) {
 	if(req.session.payload) {
-		res.json({
+		res.render('dashboard', {pageTitle: 'Dashboard'});
+		/*res.json({
 			code: 0,
 			msg: {
 				text: 'Welcome onboard!',
 				payload: req.session.payload
 			}
-		});
-	} else {
-		res.json({
-			code: -1,
-			msg: 'Something went wrong. Re-creating the universe, please wait'
-		});
+		});*/
+	} else {	// Something is not right, lets re-create the universe
+		res.redirect(_url('/'));
 	}
 });
 

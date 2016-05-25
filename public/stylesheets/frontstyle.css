@@ -17,8 +17,8 @@ body {
 }
 
 .right-panel {
-	height: 100vh;
-	max-height: 100vh;
+	height: 90vh;
+	max-height: 90vh;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	background: #FFFFFF;
@@ -29,4 +29,9 @@ textarea {
 	border-radius: 4px;
 	width: 90%;
 	padding: 4px;
+}
+
+.blueish {
+	color: #70DB93;
+	font-weight: normal;
 }

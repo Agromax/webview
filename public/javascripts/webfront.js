@@ -1,8 +1,8 @@
 var VerticalSubActionsList = React.createClass({
 	render: function() {
 		var actionStyle = {
-			minHeight: "100vh",
-			maxHeight: "100vh",
+			minHeight: "90vh",
+			maxHeight: "90vh",
 			overflowY: "scroll"
 		};
 
@@ -96,6 +96,7 @@ var LeftPanel = React.createClass({
  		}, 5000); 
 	},
 	render: function() {
+		
 		return (
 			<div className="row">
 				<div className="col-sm-2">
@@ -213,11 +214,26 @@ var Dashboard = React.createClass({
 		return (
 			<div className="container-fluid">
 				<div className='row'>
-					<div className="col-md-3" style={leftPanel}>
-						<LeftPanel versionUrl='http://localhost:3000/vc/versions' onVersionSelected={this.onVersionSelected} />
+					<div className="col-md-12" style={headerStyle}>
+						<div  className="row">
+							<div className="col-md-3">
+								<div>
+									<h3>
+									  	<span className="glyphicon glyphicon-stats blueish" aria-hidden="true"></span> dashboard
+									</h3>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div className="col-md-9">
-						<RightPanel triplets={this.state.triplets}/>
+					<div className="col-md-12">
+						<div className='row'>
+							<div className="col-md-3" style={leftPanel}>
+								<LeftPanel versionUrl='http://localhost:3000/vc/versions' onVersionSelected={this.onVersionSelected} />
+							</div>
+							<div className="col-md-9">
+								<RightPanel triplets={this.state.triplets}/>
+							</div>
+						</div>
 					</div>
 				</div>				
 			</div>
