@@ -22,26 +22,30 @@ router.post('/signin', function(req, res, next) {
 		if(err) {
 			res.json({
 				code: -1,
-				msg: 'Error occurred while authenticating, please try again later'
+				msg: 'Error occurred while authenticating, please try again later',
+				forNerds: err
 			});
 			return;
 		}
 
 		if(users.length === 1) {
 			var user = users[0];
-			var token = user.getToken();
+			var token = user.generateToken();
 			user.token = token['token'];
 			user.expires = token['expires'];
 
 			user.save(function(err, u) {
-				res.json({
-					code: 0,
-					msg: {
-						text: 'Authenticated',
-						id: u['_id'],
-						authToken: u.token
-					}
-				});
+				if(err) {
+					res.json({
+						code: -1,
+						msg: 'Something went wrong by authentication. Please try again later',
+						forNerds: err
+					});
+					return;
+				}
+
+				req.session.payload = u;
+				res.redirect('/app');
 			});
 		} else {
 			res.json({
@@ -49,9 +53,7 @@ router.post('/signin', function(req, res, next) {
 				msg: 'Could not authorize. Incorrect username or password'
 			});
 		}
-
 	});
-
 });
 
 

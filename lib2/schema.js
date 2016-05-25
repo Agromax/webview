@@ -16,10 +16,10 @@ var userSchema = new Schema({
 	loginArchives: [{ip: String, loc: String}]
 });
 
-userSchema.methods.getToken = function() {
-	var expiresAt = Date.now() + 60 * 60 * 24 * 1000
+userSchema.methods.generateToken = function() {
+	var expiresAt = Date.now() + 60 * 60 * 24 * 1000; // Expires in 24 hours by default
 	return {
-		token: random.hex(16),
+		token: random.hex(24),
 		expires: expiresAt
 	};
 };
@@ -29,7 +29,12 @@ userSchema.methods.isValidToken = function(token) {
 	}
 	return false;
 };
-userSchema.methods.getUserByToken = function(token, callback) {
+userSchema.methods.invalidateToken = function(callback) {
+	this.token = '';
+	this.expires = Date.now() - 10000;
+	this.save(callback);
+};
+userSchema.statics.findByToken = function(token, callback) {
 	this.find({token: token}, function(err, user) {
 		if(err) {
 			callback(null);
