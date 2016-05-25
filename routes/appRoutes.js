@@ -8,6 +8,8 @@ var hash = require('../lib2/hash');
 var router = express.Router();
 
 router.get('/', function (req, res, next) {
+	var token = req.body.token;
+	
 	res.send('Welcome to app');
 });
 

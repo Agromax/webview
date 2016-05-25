@@ -29,6 +29,15 @@ userSchema.methods.isValidToken = function(token) {
 	}
 	return false;
 };
+userSchema.methods.getUserByToken = function(token, callback) {
+	this.find({token: token}, function(err, user) {
+		if(err) {
+			callback(null);
+			return;
+		}
+		callback(user);
+	});
+};
 
 
 var tripletSchema = new Schema({
