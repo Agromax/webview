@@ -47,7 +47,7 @@ var RatingView = React.createClass({
 
 	getInitialState: function() {
 		return {
-			level: (this.props.minValue-1) || -1
+			level: (this.props.initLevel) || -1
 		};
 	},
 
@@ -56,6 +56,9 @@ var RatingView = React.createClass({
 		this.setState(function(prevState, curProps) {
 			return {level: val};
 		});
+		if(this.props.onValueSelected) {
+			this.props.onValueSelected(val);
+		}
 	}, 
 
 	render: function() {
@@ -76,7 +79,7 @@ var Slider = React.createClass({
 	render: function() {
 		return (
 			<div className="slider">
-				<RatingView maxRating={10} step={1} />
+				<RatingView initLevel={this.props.initialLevel} maxRating={10} step={1} onValueSelected={this.props.onValueSelected}/>
 			</div>
 		);
 	}

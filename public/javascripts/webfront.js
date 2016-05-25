@@ -8,7 +8,8 @@ var VerticalSubActionsList = React.createClass({
 
 		var aStyle = {
 			borderRadius: "0px",
-			color: "#346343"
+			color: "#346343",
+			cursor: "Pointer"
 		};
 
 		var activeStyle = {
@@ -24,7 +25,7 @@ var VerticalSubActionsList = React.createClass({
 			actions.push(
 				<li><a 
 					style={aStyle}
-					onClick={this.props.onVersionSelected}>{this.props.versions[i].id}</a></li>
+					onClick={this.props.onVersionSelected}>{this.props.versions[i]["_id"]}</a></li>
 			);
 		}
 		
@@ -77,19 +78,20 @@ var VerticalActionsList = React.createClass({
 
 var LeftPanel = React.createClass({
 	getInitialState: function() {
-		return {versions: []};
+		return {versions: [{id: 'Hello, World!'}]};
 	},
 	componentDidMount: function() {
 		var self = this;
 
  		setInterval(function() {
- 			console.log('Pinging for newer versions at: ' + self.props.versionUrl);
+ 			console.log('Pinging for newer versions at: ', self.props.versionUrl);
  			$.get(self.props.versionUrl, function(data) {
  				self.setState(function(prevState, curProps) {
  					if(data.code === 0) {
- 						return {versions: data.msg['ids']};
+ 						return {versions: data.msg};
  					} else {
- 						console.warn(data);
+ 						console.warn("Non Zero code returned. ", data);
+ 						return prevState;
  					}
  				});
  			});
@@ -113,8 +115,34 @@ var LeftPanel = React.createClass({
 
 
 var Triple = React.createClass({
+	onValueSelected: function(val) {
+		// console.log("The new value => ", val);
+		var tripleId = this.props.id;
+		var versionId = this.props.version;
+
+		$.post('http://localhost:3000/vc/grade', {
+			triple: tripleId,
+			version: versionId,
+			grade: val
+		}, function(data) {
+			if(data.code === 0 ) {
+				console.log(data.msg);
+			} else {
+				console.error(data.msg);
+			}
+		});
+	},
 	render: function() {
+		var self = this;
 		var t = this.props.triple;
+		var grade = t.grades.find(function(g) {
+			if(g.user) {
+				return g.user.toString() === self.props.user.id.toString(); 
+			}
+			return false;
+		}) || {};
+
+		var level = grade.value || -1;
 
 		return (
 			<div className="row" style={tripleStyle}>
@@ -136,7 +164,7 @@ var Triple = React.createClass({
 								<div className="form-group">
 								    <label className="control-label col-sm-2" for="">Grade</label>
 								    <div className="col-sm-10">
-								    	<Slider />
+								    	<Slider initialLevel={level} onValueSelected={this.onValueSelected}/>
 								    </div>
 								</div>
 
@@ -178,7 +206,12 @@ var RightPanel = React.createClass({
 
 		for(var i=0; i<this.props.triplets.length; i++) {
 			triplets.push(
-				<Triple triple={this.props.triplets[i]} id={this.props.triplets[i]['_id']} />
+				<Triple 
+					triple={this.props.triplets[i]} 
+					id={this.props.triplets[i]['_id']} 
+					version={this.props.version}
+					user={this.props.user}
+					/>
 			);
 		}
 
@@ -193,17 +226,17 @@ var RightPanel = React.createClass({
 
 var Dashboard = React.createClass({
 	getInitialState: function() {
-		return {triplets: []};
+		return {triplets: [], version: '', user: {id: '', username: ''}};
 	},
 	onVersionSelected: function(vId) {
-		console.warn(JSON.stringify(vId.target.innerHTML));
+		// console.warn(JSON.stringify(vId.target.innerHTML));
 		var versionId = vId.target.innerHTML;
 		var self = this;
 		$.get('http://localhost:3000/vc/version?id='+versionId, function(data) {
 			if(data) {
 				console.warn(JSON.stringify(data.msg));
 				self.setState(function(cs, curProps) {
-					return {triplets: data.msg.triplets};
+					return {triplets: data.msg.triplets, version: data.msg["_id"], user: data.msg.user};
 				});
 			} else {
 				console.warn('No data found');
@@ -231,7 +264,7 @@ var Dashboard = React.createClass({
 								<LeftPanel versionUrl='http://localhost:3000/vc/versions' onVersionSelected={this.onVersionSelected} />
 							</div>
 							<div className="col-md-9">
-								<RightPanel triplets={this.state.triplets}/>
+								<RightPanel triplets={this.state.triplets} version={this.state.version} user={this.state.user}/>
 							</div>
 						</div>
 					</div>

@@ -37,19 +37,41 @@ Returns the details of individual version
 */
 router.get('/version', function(req, res, next) {
 	var versionId = req.query.id;
-	Schema.VersionControl.findById(versionId, function(err, record) {
-		if(err) {
-			res.json({
-				code: -1,
-				msg: err
+	if(req.session.payload) {
+		Schema.VersionControl.findById(versionId, function(err, record) {
+			if(err) {
+				res.json({
+					code: -1,
+					msg: err
+				});
+				return;
+			}
+			var rec = record.toObject();
+			rec['user'] = {
+				id: req.session.payload["_id"], 
+				username: req.session.payload['username']
+			};
+			/*var curUser = req.session.payload;
+			var triplets = record.triplets.map(function(t) {
+				var gradeVal = t.grades.find(function(g) {
+					if(g.user) {
+						return g.user.toString() === curUser["_id"].toString();
+					}
+					return false;
+				});
+				t['gradeVal'] = gradeVal;
+				return t;
 			});
-			return;
-		}
-		res.json({
-			code: 0,
-			msg: record
+			record.triplets = triplets;*/
+
+			res.json({
+				code: 0,
+				msg: rec
+			});
 		});
-	});
+	} else {
+		res.redirect('/app');
+	}
 });
 
 
@@ -80,52 +102,45 @@ router.post('/grade', function(req, res, next ) {
 	var versionId = req.body.version;
 	var tripleId = req.body.triple;
 	var gradeVal = parseInt(req.body.grade);
-	var token = req.body.token;
 
-	User.find({token: token}, function(err, docs) {
-		if(err) {
-			res.json({
-				code: -1,
-				msg: err
-			});
-			return;
-		}
+	// var token = req.body.token;
 
-		var user = docs[0];
-		if(user.isValidToken(token)) {
-			VC.findById(versionId, function(err, version) {
-				var triple = version.triplets.id(tripleId);
-				var marks = triple.grades.find(function(u){
+	if(req.session.payload) {
+		var user = req.session.payload;
+
+		VC.findById(versionId, function(err, version) {
+			var triple = version.triplets.id(tripleId);
+			var marks = triple.grades.find(function(u) {
+				if(u.user) {
 					return u.user.toString() === user["_id"].toString();
-				});
-
-				if(!marks) {
-					marks = {user: user.id, value: gradeVal};
-					triple.grades.push(marks);
-				} else {
-					marks['value'] = gradeVal;
 				}
-				version.save(function(err, v) {
-					if(err) {
-						res.json({
-							code: -1,
-							msg: err
-						});
-						return;
-					}
+				return false;
+			});
+
+			if(!marks) {
+				marks = {user: user["_id"], value: gradeVal};
+				triple.grades.push(marks);
+			} else {
+				marks['value'] = gradeVal;
+			}
+			version.save(function(err, v) {
+				if(err) {
 					res.json({
-						code: 0,
-						msg: 'Grade for triple with id=' + triple.id + ' updated to:' + gradeVal  
+						code: -1,
+						msg: err
 					});
+					return;
+				}
+				res.json({
+					code: 0,
+					msg: 'Grade for triple with id=' + triple.id + ' updated to:' + gradeVal  
 				});
 			});
-		} else {
-			res.json({
-				code: -1,
-				msg: 'Behold unauthorized user! your token has expire'
-			});
-		}
-	});
+		});
+
+	} else {
+		res.redirect('/app');
+	}
 });
 
 
