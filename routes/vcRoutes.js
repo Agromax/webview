@@ -95,19 +95,16 @@ router.post('/grade', function(req, res, next ) {
 		if(user.isValidToken(token)) {
 			VC.findById(versionId, function(err, version) {
 				var triple = version.triplets.id(tripleId);
-				var marks = triple.grades.find(function(u){return u.user === user["_id"];});
+				var marks = triple.grades.find(function(u){
+					return u.user.toString() === user["_id"].toString();
+				});
 
-				console.log("marks => ", marks);
 				if(!marks) {
-					marks = {user: user.id, grade: gradeVal};
+					marks = {user: user.id, value: gradeVal};
 					triple.grades.push(marks);
 				} else {
-					marks['grade'] = gradeVal;
+					marks['value'] = gradeVal;
 				}
-
-				console.log(marks);
-
-
 				version.save(function(err, v) {
 					if(err) {
 						res.json({
@@ -136,6 +133,59 @@ router.post('/grade', function(req, res, next ) {
 Updates the feedback given by the domain expert on the given triple
 */
 router.post('/feedback', function(req, res, next) {
+	var VC = Schema.VersionControl;
+	var User = Schema.User;
+
+	var versionId = req.body.version;
+	var tripleId = req.body.triple;
+	var feedback = req.body.feedback;
+	var token = req.body.token;
+
+	User.find({token: token}, function(err, docs) {
+		if(err) {
+			res.json({
+				code: -1,
+				msg: err
+			});
+			return;
+		}
+
+		var user = docs[0];
+		if(user.isValidToken(token)) {
+			VC.findById(versionId, function(err, version) {
+				var triple = version.triplets.id(tripleId);
+				var marks = triple.grades.find(function(u){
+					return u.user.toString() === user["_id"].toString();
+				});
+
+				if(!marks) {
+					marks = {user: user.id, value: 0, feedback: feedback};
+					triple.grades.push(marks);
+				} else {
+					marks['feedback'] = feedback;
+				}
+
+				version.save(function(err, v) {
+					if(err) {
+						res.json({
+							code: -1,
+							msg: err
+						});
+						return;
+					}
+					res.json({
+						code: 0,
+						msg: 'Feedback for triple with id=' + triple.id + ' updated to:' + feedback  
+					});
+				});
+			});
+		} else {
+			res.json({
+				code: -1,
+				msg: 'Behold unauthorized user! your token has expire'
+			});
+		}
+	});
 	
 });
  	

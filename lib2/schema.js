@@ -37,7 +37,8 @@ var tripletSchema = new Schema({
 	pre: String,
 	grades: [{
 		user: Schema.Types.ObjectId,
-		value: Number
+		value: Number,
+		feedback: String
 	}],
 	avgGrade: Number
 });
