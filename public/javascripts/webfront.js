@@ -1,14 +1,8 @@
 var VerticalSubActionsList = React.createClass({
 	render: function() {
-		var actionStyle = {
-			minHeight: "90vh",
-			maxHeight: "90vh",
-			overflowY: "scroll"
-		};
-
 		var aStyle = {
 			borderRadius: "0px",
-			color: "#346343",
+			color: '#346343',//"#346343",
 			cursor: "Pointer"
 		};
 
@@ -18,7 +12,6 @@ var VerticalSubActionsList = React.createClass({
 			borderBottom: "solid 1px #67C887"
 
 		};
-
 
 		var actions = [];
 		for(var i=0; i<this.props.versions.length; i++) {
@@ -31,10 +24,10 @@ var VerticalSubActionsList = React.createClass({
 		
 		return (
 			<div style={subActionPanel}>
-				<div style={actionStyle}>
+				<div>
 					<ul className="nav nav-pills nav-stacked">
 						<li>
-							<a href="#" style={aStyle}>Report</a>
+							<a href="#" style={aStyle}>Cumulative Report</a>
 						</li>
 						{actions}
 					</ul>
@@ -98,13 +91,9 @@ var LeftPanel = React.createClass({
  		}, 5000); 
 	},
 	render: function() {
-		
 		return (
 			<div className="row">
-				<div className="col-sm-2">
-					<VerticalActionsList />
-				</div>
-				<div className="col-sm-10">
+				<div className="col-sm-12">
 					<VerticalSubActionsList versions={this.state.versions} onVersionSelected={this.props.onVersionSelected} />
 				</div>
 			</div>
@@ -220,11 +209,6 @@ var Triple = React.createClass({
 											<span className="glyphicon glyphicon-ok greenish"></span>&nbsp;&nbsp;Save
 										</button>
 								    </div>
-									<div className="col-sm-1">
-								    	<button type="button" className="btn btn-default">
-											<span className="glyphicon glyphicon-trash greenish"></span>&nbsp;&nbsp;Discard
-										</button>
-								    </div>
 								</div>
 							</form>
 						</div>
@@ -254,7 +238,7 @@ var RightPanel = React.createClass({
 		}
 
 		return (
-			<div className='right-panel' >
+			<div className='right-panel'>
 				{triplets}
 			</div>
 		);
@@ -285,7 +269,7 @@ var Dashboard = React.createClass({
 		return (
 			<div className="container-fluid">
 				<div className='row'>
-					<div className="col-md-12" style={headerStyle}>
+					<div className="col-md-12 headerStyle" >
 						<div  className="row">
 							<div className="col-md-3">
 								<div className="btn-group">
@@ -313,8 +297,8 @@ var Dashboard = React.createClass({
 						</div>
 					</div>
 					<div className="col-md-12">
-						<div className='row'>
-							<div className="col-md-3" style={leftPanel}>
+						<div className='row myrow'>
+							<div className="col-md-3 left-panel">
 								<LeftPanel versionUrl='http://localhost:3000/vc/versions' onVersionSelected={this.onVersionSelected} />
 							</div>
 							<div className="col-md-9">

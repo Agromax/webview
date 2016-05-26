@@ -18,12 +18,24 @@ body {
 	margin-bottom: 12px;
 }
 
-.right-panel {
-	height: 90vh;
-	max-height: 90vh;
-	overflow-y: scroll;
-	overflow-x: hidden;
+.myrow {
+	overflow: hidden;
+}
+
+.left-panel {
+	padding-bottom: 10000%;
+	margin-bottom: -10000%;
 	background: #FFFFFF;
+	color: #346343;
+	height: 100%;
+}
+.right-panel {
+	overflow: auto;
+	min-height: 100vh;
+	/*background: #70DB93;/*#E0F4FF;*/*/
+	margin-left: -15px;
+	margin-right: -15px;
+	border-left: solid 2px #70DB93;
 }
 
 textarea {
@@ -40,43 +52,56 @@ textarea {
 
 .logo {
 	opacity: 1.0;
-	color: #70DB93;
+	color: #346343;/*#70DB93;*/
 	border: none;
 	background-color: #FFFFFF;
 	font-size: 20px;
 	cursor: pointer;
+	background: transparent;
+	text-shadow: 0px 0px 1px #ccc;
 }
 
 .logo:hover {
 	background: none;
-	color: #70DB93;
+	color: #346343;
 	background-color: #FFFFFF;
 	cursor: pointer;
 	opacity: 1.0;
+	background: transparent;
 }
 .logo:active, .logo:focus {
 	background: none;
 	border-style: outset;
 	border: none;
-	color: #70DB93;
-	background-color: #FFFFFF;
+	color: #346343;
 	opacity: 1.0;
+	background: transparent;
 }
 
 .profile {
 	opacity: 1.0;
-	color: #5A5A5A;
+	color: #346343;
 	border: none;
 	background-color: #FFFFFF;
 	font-size: 14px;
 	cursor: pointer;
 	margin-right: 16px;
 	margin-top: 4px;
+	background: transparent;
 }
 .profile:hover {
 	background: none;
-	/*color: #70DB93;*/
+	color: #346343;
 	background-color: #FFFFFF;
 	cursor: pointer;
 	opacity: 1.0;
+	background: transparent;
+}
+
+.headerStyle {
+	color: '#FFFFFF';
+	padding-left: '16px';
+	z-index: 1000;
+	background: #70DB93;
+	box-shadow: 0px 0px 4px #303030;
 }

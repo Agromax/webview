@@ -1,30 +1,28 @@
 var leftPanel = {
-	backgroundColor: "#FFFFFF",
 	color: "#FFFFFF",
-	height: "90vh"
+	backgroundColor: '#FFFFFF',
+	border: 'solid 1px #000',
+	position: 'static',
+	float: 'left',
+	minHeight: '100%',
+	display: 'table-cell'
 };
-
+var rightPanel = {
+	position: 'static',
+	overflow: 'auto'
+}
 var subActionPanel = {
-	backgroundColor: "#70DB93",
-	height: "90vh",
-	color: "#ffffff"
-	// marginLeft: "-15px"
+	// backgroundColor: "#70DB93",
+	// overflow: 'auto',
+	// color: "#ffffff"
 };
 
 var tripleStyle = {
-	// backgroundColor: "#E0F4FF",
+	backgroundColor: "#FFFFFF",
+	margin: '20px',
 	marginBottom: "20px",
 	paddingTop: "16px",
 	paddingBottom: "16px",
-	borderBottom: "solid 1px #D5F0DF"
-
-};
-
-var headerStyle = {
-	// backgroundColor: '#54B274', //'#70DB93',
-	color: '#70DB93', //'#54B274',
-	paddingLeft: '16px',
-	zIndex: 1000,
-	// height: '10vh',
-	boxShadow: '0px 0px 4px #ccc'
+	// borderRadius: '8px',
+	borderBottom: "solid 1px #70DB93",
 };
