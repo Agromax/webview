@@ -249,7 +249,7 @@ var RightPanel = React.createClass({
 					id={this.props.triplets[i]['_id']} 
 					version={this.props.version}
 					user={this.props.user}
-					/>
+					 />
 			);
 		}
 
