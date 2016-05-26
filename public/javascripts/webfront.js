@@ -115,6 +115,12 @@ var LeftPanel = React.createClass({
 
 
 var Triple = React.createClass({
+	getInitialState: function() {
+		return {feedback: ''};
+	},
+	handleFeedbackChange: function(e) {
+		this.setState({feedback: e.target.value});
+	},
 	onValueSelected: function(val) {
 		// console.log("The new value => ", val);
 		var tripleId = this.props.id;
@@ -131,6 +137,38 @@ var Triple = React.createClass({
 				console.error(data.msg);
 			}
 		});
+	},
+	handleSave: function(e) {
+		var tripleId = this.props.id;
+		var versionId = this.props.version; 
+		var feedback = this.refs.feedback.value;
+
+		if(feedback && feedback.length > 0) {
+			$.post('http://localhost:3000/vc/feedback', {
+				triple: tripleId,
+				version: versionId,
+				feedback: feedback
+			}, function(data) {
+				if(data.code === 0 ) {
+					console.log(data.msg);
+				} else {
+					console.error(data.msg);
+				}
+			});
+		}
+	},
+	componentDidMount: function() {
+		var self = this;
+	    var t = this.props.triple;
+		var grade = t.grades.find(function(g) {
+			if(g.user) {
+				return g.user.toString() === self.props.user.id.toString(); 
+			}
+			return false;
+		}) || {};
+
+		var feedback = grade.feedback || '';
+		this.setState({feedback: feedback});
 	},
 	render: function() {
 		var self = this;
@@ -171,14 +209,14 @@ var Triple = React.createClass({
 								<div className="form-group">
 								    <label className="control-label col-sm-2" for="">Feedback</label>
 								    <div className="col-sm-10">
-								    	<textarea placeholder="Write your feedback"></textarea>
+								    	<textarea placeholder="Write your feedback" ref="feedback" onChange={this.handleFeedbackChange} value={this.state.feedback}></textarea>
 								    </div>
 								</div>
 
 								<div className="form-group">
 									<label className="control-label col-sm-2" for=""></label>
 								    <div className="col-sm-1">
-								    	<button type="button" className="btn btn-default">
+								    	<button type="button" className="btn btn-default" onClick={this.handleSave}>
 											<span className="glyphicon glyphicon-ok greenish"></span>&nbsp;&nbsp;Save
 										</button>
 								    </div>

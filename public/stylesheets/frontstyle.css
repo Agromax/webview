@@ -1,8 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway);
 @import url(https://fonts.googleapis.com/css?family=Ubuntu);
+@import url(https://fonts.googleapis.com/css?family=Varela+Round);
 
 body {
-	font-family: 'Ubuntu', sans-serif;
+	/*font-family: 'Ubuntu', sans-serif;*/
+	font-family: 'Varela Round', sans-serif;
 }
 
 .greenish {
