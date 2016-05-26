@@ -222,9 +222,7 @@ var Triple = React.createClass({
 
 var RightPanel = React.createClass({
 	render: function()  {
-		var ts = {sub: 'Indian whete ksjfksfdkhfd jhf hfjh fjdhfj hdjfhdjh fjdhfjdhf jdhf jdhf jdhf jdhfdjjjjjjjjjjjjjjjjjjjjjjjjfhdjhf jdhfjdhf djfhj hdjfhj hdjfh', pred: 'wheet-bla-bla-bla-bla-foo+-bar', obj: 'tastes_sweet'}
 		var triplets = [];
-
 
 		for(var i=0; i<this.props.triplets.length; i++) {
 			triplets.push(
