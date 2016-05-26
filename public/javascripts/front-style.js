@@ -25,6 +25,6 @@ var headerStyle = {
 	color: '#70DB93', //'#54B274',
 	paddingLeft: '16px',
 	zIndex: 1000,
-	height: '10vh',
+	// height: '10vh',
 	boxShadow: '0px 0px 4px #ccc'
 };

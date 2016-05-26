@@ -14,6 +14,22 @@ router.get('/', function (req, res, next) {
 });
 
 
+router.get('/me', function(req, res, next) {
+	if(req.session.payload) {
+		res.json({
+			code: 0,
+			msg: req.session.payload
+		});
+	} else {
+		res.json({
+			code: -1,
+			msg: 'Not Authorized'
+		});
+	}
+});
+
+
+
 router.post('/signin', function(req, res, next) {
 	var username = req.body.user;
 	var password = req.body.pwd;

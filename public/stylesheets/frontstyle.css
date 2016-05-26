@@ -37,3 +37,46 @@ textarea {
 	color: #70DB93;
 	font-weight: normal;
 }
+
+.logo {
+	opacity: 1.0;
+	color: #70DB93;
+	border: none;
+	background-color: #FFFFFF;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+.logo:hover {
+	background: none;
+	color: #70DB93;
+	background-color: #FFFFFF;
+	cursor: pointer;
+	opacity: 1.0;
+}
+.logo:active, .logo:focus {
+	background: none;
+	border-style: outset;
+	border: none;
+	color: #70DB93;
+	background-color: #FFFFFF;
+	opacity: 1.0;
+}
+
+.profile {
+	opacity: 1.0;
+	color: #5A5A5A;
+	border: none;
+	background-color: #FFFFFF;
+	font-size: 14px;
+	cursor: pointer;
+	margin-right: 16px;
+	margin-top: 4px;
+}
+.profile:hover {
+	background: none;
+	/*color: #70DB93;*/
+	background-color: #FFFFFF;
+	cursor: pointer;
+	opacity: 1.0;
+}

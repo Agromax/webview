@@ -288,10 +288,26 @@ var Dashboard = React.createClass({
 					<div className="col-md-12" style={headerStyle}>
 						<div  className="row">
 							<div className="col-md-3">
-								<div>
-									<h3>
-									  	<span className="glyphicon glyphicon-stats blueish" aria-hidden="true"></span> dashboard
-									</h3>
+								<div className="btn-group">
+									<button type="button" className="btn btn-default logo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										    <span className="glyphicon glyphicon-stats" aria-hidden="true"></span> dashboard
+									</button>
+									
+								</div>
+							</div>
+							<div className="col-md-6"></div>
+							<div className="col-md-3">
+								<div className="pull-right">
+									<div className="btn-group">
+										<button type="button" className="btn btn-default dropdown-toggle profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										    {this.props.curUser.name}&nbsp; <span className="caret"></span>
+										</button>
+										<ul className="dropdown-menu">
+										    <li><a href="#"><span className="glyphicon glyphicon-wrench" aria-hidden="true"></span>&nbsp;&nbsp;Settings</a></li>
+										    <li role="separator" className="divider"></li>
+										    <li><a href="#"><span className="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;&nbsp;Logout</a></li>
+										</ul>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -315,8 +331,13 @@ var Dashboard = React.createClass({
 
 
 $(document).ready(function () {
-    ReactDOM.render(
-        <Dashboard />,
-        document.getElementById('dashboard-content')
-    );
+	$.get('/users/me', function(data) {
+		if(data.code === 0) {
+			ReactDOM.render(
+		        <Dashboard curUser={data.msg} />,
+		        document.getElementById('dashboard-content')
+		    );
+		}
+	});
+    
 });
