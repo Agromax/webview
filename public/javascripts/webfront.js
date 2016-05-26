@@ -254,7 +254,7 @@ var RightPanel = React.createClass({
 		}
 
 		return (
-			<div className='right-panel'>
+			<div className='right-panel' >
 				{triplets}
 			</div>
 		);
