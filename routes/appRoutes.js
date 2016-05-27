@@ -52,5 +52,13 @@ router.get('/enter', function(req, res, next) {
 });
 
 
+route.get('/analysis', function(req, res, next) {
+	if(req.session.payload) {
+		res.render('analysis');
+	} else {
+		res.redirect('/app');
+	}
+});
+
 module.exports = router;
 
