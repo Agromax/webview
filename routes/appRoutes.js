@@ -52,9 +52,9 @@ router.get('/enter', function(req, res, next) {
 });
 
 
-route.get('/analysis', function(req, res, next) {
+router.get('/analysis', function(req, res, next) {
 	if(req.session.payload) {
-		res.render('analysis');
+		res.render('analysis', {pageTitle: 'Analysis'});
 	} else {
 		res.redirect('/app');
 	}

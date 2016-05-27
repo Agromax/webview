@@ -1,0 +1,33 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+@import url(https://fonts.googleapis.com/css?family=Ubuntu);
+@import url(https://fonts.googleapis.com/css?family=Varela+Round);
+
+body {
+	/*font-family: 'Ubuntu', sans-serif;*/
+	font-family: 'Varela Round', sans-serif;
+}
+
+.blue {
+	border: solid 1px blue;
+	height: 1080px;
+}
+
+body {
+	padding-top: 50px;
+}
+
+.left-nav {
+	margin-top: 20px;
+}
+.nav-stacked > li > a {
+	border-radius: 0px;
+	margin-left: -15px;
+	margin-right: -15px;
+	color: #346343;
+	text-align: right;
+}
+
+.nav-stacked > li.active {	
+  color: #fff;
+  background-color: #70DB93 !important;
+}
