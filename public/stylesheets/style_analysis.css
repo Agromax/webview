@@ -32,3 +32,31 @@ body {
     color: #346343 !important;
     background-color: #70DB93 !important;
 }
+
+
+.right-nav {
+	margin-left: -15px;
+	margin-right: -15px;
+	/*margin-top: -20px;*/
+	padding-top: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+	background-color: #F0F0F0;
+	min-height: 100vh;
+}
+
+.disabled-text-ctl,
+.disabled-text-ctl:active,
+.disabled-text-ctl:focus
+ {
+ 	border-right: 0px;
+	border: none;
+	box-shadow: none;
+	/*text-transform: uppercase;*/
+}
+
+.align-right {
+	/*border: dotted 1px !important;*/
+	margin-right: -15px !important;
+	text-align: right;
+}
