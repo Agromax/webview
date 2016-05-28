@@ -33,7 +33,9 @@ body {
     background-color: #70DB93 !important;
 }
 
-
+.green {
+	color: #346343 !important;
+}
 .right-nav {
 	margin-left: -15px;
 	margin-right: -15px;
@@ -41,7 +43,7 @@ body {
 	padding-top: 20px;
 	padding-left: 20px;
 	padding-right: 20px;
-	background-color: #F0F0F0;
+	background-color: #EEEEEE;
 	min-height: 100vh;
 }
 

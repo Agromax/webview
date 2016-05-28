@@ -3,7 +3,7 @@ var SummaryPanel = React.createClass({
 	render: function() {
 		return (
 			<div className="panel panel-default">
-				<div className="panel-heading">Summary</div>
+				<div className="panel-heading">Summary of this version</div>
 				<div className="panel-body">
 					<form className="form-horizontal">
 						<div className="form-group">
@@ -79,13 +79,13 @@ var BarChart = React.createClass({
 
 		for(var grade = 0; grade <= 10; grade ++) {
 			var width = data[grade] + '%';
-			var style = {width: width};
+			var style = {width: width, backgroundColor: '#70DB93'};
 			bars.push(
 				<div className="form-group">
 					<label className="control-label col-sm-2 align-right">{'Grade ' + grade}</label>
 					<div className="col-sm-10">
 						<div className="progress">
-							<div className="progress-bar" role="progressbar" style={style}>{width}</div>
+							<div className="progress-bar green" role="progressbar" style={style}>{width}</div>
 						</div>
 					</div>
 				</div>
@@ -93,10 +93,13 @@ var BarChart = React.createClass({
 		}
 
 		return (
-			<div>
-				<form className="form-horizontal">
-					{bars}
-				</form>
+			<div className="panel panel-default">
+				<div className="panel-heading">{this.props.title}</div>
+				<div className="panel-body">
+					<form className="form-horizontal">
+						{bars}
+					</form>
+				</div>
 			</div>
 		);
 	}
@@ -123,7 +126,7 @@ var RightPanel = React.createClass({
 		});
 	},
 	componentDidMount: function() {
-		var versionId = this.props.version;
+		/*var versionId = this.props.version;
 		var self = this;
 
 		this.loadVersion(versionId, function(v) {
@@ -134,13 +137,43 @@ var RightPanel = React.createClass({
 				ts: v.ts, 
 				triplets: v.triplets
 			});
-		});
+		});*/
 	},
 	render: function() {
 		return (
 			<div className="right-nav">
-				<SummaryPanel version={this.state.id} ts={this.state.ts} desc={this.state.desc}/>
-				<BarChart triplets={this.state.triplets}/>
+				<SummaryPanel 
+					version={this.props.version} 
+					ts={this.props.ts} 
+					desc={this.props.desc} 
+					count={this.props.triplets.length}
+				/>
+				<BarChart triplets={this.props.triplets} title='Frequency of individual grade'/>
+			</div>
+		);
+	}
+});
+
+
+var LeftPanel = React.createClass({
+	render: function() {
+		var versions = this.props.versions;
+		var actions 	 = [];
+		var self  	 = this;
+
+		versions.forEach(function(v) {
+			actions.push(
+				<li role="presentation" key={v["_id"]} className={self.props.selected === v["_id"] ? 'active': ''}>
+					<a href="#" onClick={self.props.onVersionSelected}>{v["_id"]}</a>
+				</li>
+			);
+		});
+
+		return (
+			<div>
+				<ul className="nav nav-pills nav-stacked">
+					{actions}
+				</ul>
 			</div>
 		);
 	}
@@ -148,9 +181,60 @@ var RightPanel = React.createClass({
 
 
 var Dashboard = React.createClass({
-	onVersionSelected: function(vId) {
-		
+	getInitialState: function() {
+	    return {
+	          selected: '',
+	          versionList: [],
+	          version: {
+	          	ts: '',
+	          	desc: '',
+	          	triplets: []
+	          }
+	    };
 	},
+	loadIndividualVersion: function(versionId, callback) {
+		$.get('http://localhost:3000/vc/version?id='+versionId, function(data) {
+			if(data.code === 0) {
+				var v = data.msg;
+				callback(v);
+			} else {
+				console.warn(data.msg);
+			}
+		});
+	},
+	handleVersionSelection: function(e) {
+		var versionId = e.target.innerHTML;
+		var self 	  = this;
+
+		console.log("Selected version ", versionId);
+		self.setState({selected: versionId});
+		self.loadIndividualVersion(versionId, function(v) {
+			self.setState({
+				version: {
+					ts      : v["ts"],
+					desc    : v.desc,
+					triplets: v.triplets
+				}
+			});
+		});
+
+	},
+	loadVersions: function(url, callback) {
+		$.get(url, function(data) {
+			if(data.code === 0) {
+				callback(data.msg);
+			} else {
+				console.log(data.msg);
+			}
+		});
+	},
+	componentDidMount: function() {
+		var self = this;
+		self.loadVersions('http://localhost:3000/vc/versions', function(vs) {
+			self.setState({versionList: vs});
+		});
+	},
+
 	render: function() {
 		return (
 			<div>					
@@ -172,14 +256,19 @@ var Dashboard = React.createClass({
 				<div className="container-fluid">
 					<div className='row'>
 						<div className="col-md-3 left-nav">
-							<ul className="nav nav-pills nav-stacked">
-								<li role="presentation" className="active"><a href="#">Overall Report</a></li>
-								<li role="presentation"><a href="#">Profile</a></li>
-								<li role="presentation"><a href="#">Messages</a></li>
-							</ul>
+							<LeftPanel 
+								versions={this.state.versionList} 
+								selected={this.state.selected} 
+								onVersionSelected={this.handleVersionSelection}
+							/>
 						</div>
 						<div className="col-md-9">
-							<RightPanel versionUrl='http://localhost:3000/vc/version' version={'57444af0e6b8eed8280e4114'}/>
+							<RightPanel
+								version={this.state.selected} 
+								ts={this.state.version.ts}
+								desc={this.state.version.desc}
+								triplets={this.state.version.triplets}
+							/>
 						</div>
 					</div>
 				</div>
