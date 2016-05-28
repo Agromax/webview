@@ -27,7 +27,8 @@ body {
 	text-align: right;
 }
 
-.nav-stacked > li.active {	
-  color: #fff;
-  background-color: #70DB93 !important;
+.nav-stacked > .active > a {	
+	border-left: solid 4px #70DB93; 
+    color: #346343 !important;
+    background-color: #70DB93 !important;
 }

@@ -1,5 +1,14 @@
 
 
+var RightPanel = React.createClass({
+	render: function() {
+		return (
+			<div>
+				<h1>Hello World</h1>
+			</div>
+		);
+	}
+});
 
 
 var Dashboard = React.createClass({
@@ -28,12 +37,14 @@ var Dashboard = React.createClass({
 					<div className='row'>
 						<div className="col-md-3 left-nav">
 							<ul className="nav nav-pills nav-stacked">
-								<li role="presentation"><a href="#">Overall Report</a></li>
+								<li role="presentation" className="active"><a href="#">Overall Report</a></li>
 								<li role="presentation"><a href="#">Profile</a></li>
 								<li role="presentation"><a href="#">Messages</a></li>
 							</ul>
 						</div>
-						<div className="col-md-9"></div>
+						<div className="col-md-9">
+							<RightPanel />
+						</div>
 					</div>
 				</div>
 			</div>
