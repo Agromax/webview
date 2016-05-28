@@ -107,38 +107,6 @@ var BarChart = React.createClass({
 
 
 var RightPanel = React.createClass({
-	getInitialState: function() {
-		return {
-			id: null,
-			desc: null,
-			ts: null,
-			triplets: []
-		};
-	},
-	loadVersion: function(versionId, callback) {
-		$.get(this.props.versionUrl + '?id='+versionId, function(data) {
-			if(data.code === 0) {
-				var v = data.msg;
-				callback(v);
-			} else {
-				console.warn(data.msg);
-			}
-		});
-	},
-	componentDidMount: function() {
-		/*var versionId = this.props.version;
-		var self = this;
-
-		this.loadVersion(versionId, function(v) {
-			console.warn(v);
-			self.setState({
-				id: v["_id"].toString(), 
-				desc: v.desc, 
-				ts: v.ts, 
-				triplets: v.triplets
-			});
-		});*/
-	},
 	render: function() {
 		return (
 			<div className="right-nav">
@@ -172,6 +140,7 @@ var LeftPanel = React.createClass({
 		return (
 			<div>
 				<ul className="nav nav-pills nav-stacked">
+					<li role="presentation" className="help">Given below is the list of all the versions available. Please select a version to view details</li>
 					{actions}
 				</ul>
 			</div>
