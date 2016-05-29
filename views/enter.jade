@@ -3,7 +3,13 @@ extends ./layout.jade
 block content
 	div.container
 		div.row
-			div(class="col-md-4 col-md-offset-4")
+			div(class="col-md-3", style="margin-top: 20px;")
+				div(class="panel panel-default")
+					//- div(class="panel-heading") Note
+					div(class="panel-body") This website uses cookies to enhance your experiance
+
+
+			div(class="col-md-4 col-md-offset-1")
 				h3 Please enter your credentials
 				form(action='/users/signin', method='POST', role='form')
 					div.form-group
