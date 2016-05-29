@@ -203,7 +203,9 @@ var Dashboard = React.createClass({
 			self.setState({versionList: vs});
 		});
 	},
-
+	handleBack: function(e) {
+		window.location = "/app/dashboard";
+	},
 	render: function() {
 		return (
 			<div>					
@@ -220,6 +222,9 @@ var Dashboard = React.createClass({
 						        </ul>
 					        </li>
 				      	</ul>
+				      	<div className="nav navbar-nav navbar-right">
+				      		<button type="button" className="btn btn-default navbar-btn" onClick={this.handleBack}><span className="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Back to Dashboard</button>
+				      	</div>
 					</div>
 				</nav>
 				<div className="container-fluid">
