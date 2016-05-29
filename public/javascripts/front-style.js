@@ -23,6 +23,5 @@ var tripleStyle = {
 	marginBottom: "20px",
 	paddingTop: "16px",
 	paddingBottom: "16px",
-	// borderRadius: '8px',
 	borderBottom: "solid 1px #70DB93",
 };

@@ -31,9 +31,25 @@ router.get('/', function (req, res, next) {
 });
 
 
-router.get('/dashboard', function(req, res, next) {
+router.get('/dashboardOld', function(req, res, next) {
 	if(req.session.payload) {
 		res.render('dashboard', {pageTitle: 'Dashboard'});
+		/*res.json({
+			code: 0,
+			msg: {
+				text: 'Welcome onboard!',
+				payload: req.session.payload
+			}
+		});*/
+	} else {	// Something is not right, lets re-create the universe
+		res.redirect(_url('/'));
+	}
+});
+
+
+router.get('/dashboard', function(req, res, next) {
+	if(req.session.payload) {
+		res.render('newDashboard', {pageTitle: 'Dashboard'});
 		/*res.json({
 			code: 0,
 			msg: {

@@ -1,16 +1,19 @@
 doctype html
 html(lang="en")
 	head
-		link(rel="icon", type="image/png", href="/favicon.png")
 		title= pageTitle
+		link(rel="icon", type="image/png", href="/favicon.png")
 		link(rel="stylesheet", href="/stylesheets/bootstrap.css")
+		link(rel="stylesheet", href="/stylesheets/dashboard-style.css")
 		link(rel="stylesheet", href="/stylesheets/style.css")
 		script(src="/javascripts/jquery-1.12.3.js")
 		script(src="/javascripts/bootstrap.min.js")
 		script(src="/javascripts/react.js")
 		script(src="/javascripts/react-dom.js")
 		script(src="/javascripts/browser.min.js")
+		script(src="/javascripts/front-style.js")
 		script(type="text/babel", src="/javascripts/webapp.js")
+		script(type="text/babel", src="/javascripts/dashboardApp.js")
 	body
-		div#content
+		div#dashboard-content
 

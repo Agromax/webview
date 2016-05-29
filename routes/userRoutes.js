@@ -14,6 +14,12 @@ router.get('/', function (req, res, next) {
 });
 
 
+router.get('/logout', function(req, res, next) {
+	req.session.payload = null;
+	res.redirect('/');
+});
+
+
 router.get('/me', function(req, res, next) {
 	if(req.session.payload) {
 		res.json({
@@ -36,10 +42,9 @@ router.post('/signin', function(req, res, next) {
 
 	User.find({username: username, password: hash(password)}, function(err, users) {
 		if(err) {
-			res.json({
-				code: -1,
-				msg: 'Error occurred while authenticating, please try again later',
-				forNerds: err
+			res.render('enter', {
+				pageTitle: 'Sign In here', 
+				errorMessage: 'Error occurred while authenticating, please try again later'
 			});
 			return;
 		}
@@ -52,10 +57,9 @@ router.post('/signin', function(req, res, next) {
 
 			user.save(function(err, u) {
 				if(err) {
-					res.json({
-						code: -1,
-						msg: 'Something went wrong by authentication. Please try again later',
-						forNerds: err
+					res.render('enter', {
+						pageTitle: 'Sign In here', 
+						errorMessage: 'Something went wrong by authentication. Please try again later'
 					});
 					return;
 				}
@@ -64,9 +68,9 @@ router.post('/signin', function(req, res, next) {
 				res.redirect('/app');
 			});
 		} else {
-			res.json({
-				code: -1,
-				msg: 'Could not authorize. Incorrect username or password'
+			res.render('enter', {
+				pageTitle: 'Sign In here', 
+				errorMessage: 'Could not authorize. Incorrect username or password'
 			});
 		}
 	});

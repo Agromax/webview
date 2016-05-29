@@ -218,7 +218,7 @@ var Dashboard = React.createClass({
 						        <ul className="dropdown-menu">
 						        	<li><a href="#"><span className="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;Settings</a></li>
 						        	<li role="separator" className="divider"></li>
-						        	<li><a href="#"><span className="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout</a></li>
+						        	<li><a href="/users/logout"><span className="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout</a></li>
 						        </ul>
 					        </li>
 				      	</ul>

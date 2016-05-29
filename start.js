@@ -4,6 +4,7 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var expressWs = require('express-ws')(app);
 var crypto = require('crypto');
+var favicon = require('serve-favicon');
 
 var models = require('./lib/models');
 var vcRoute = require('./routes/vcRoutes.js');
@@ -21,6 +22,7 @@ app.set('views', './views');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(favicon(__dirname + '/public/favicon.png'));
 
 // Handles all the version controller API
 app.use('/vc', vcRoute);

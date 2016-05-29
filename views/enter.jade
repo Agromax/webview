@@ -8,12 +8,12 @@ block content
 				form(action='/users/signin', method='POST', role='form')
 					div.form-group
 						label Username:
-						input(type='text', name='user', class='form-control', placeholder='Username')
+						input(type='text', name='user', class='form-control green-border', placeholder='Username')
 					div.form-group
 						label Password:
-						input(type='password', name='pwd', class='form-control', placeholder='Password')
+						input(type='password', name='pwd', class='form-control green-border', placeholder='Password')
 					div.form-group
-						input(type='submit', value='Sign in', class='btn btn-success')
+						input(type='submit', value='Sign in', class='btn btn-default greenish')
 
 		if errorMessage
 			div(class='alert alert-danger')= errorMessage
