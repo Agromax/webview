@@ -26,11 +26,11 @@ var SelectableRatingList = React.createClass({
 		for(var i = minRating; i <= maxRating; i += step) {
 			if(i <= selectedLevel) {
 				ratingValues.push((
-					<RatingValue value={i} ratingClass="rating-value-active" onSelected={this.props.onValueSelected}/>
+					<RatingValue key={'rate-val-'+i} value={i} ratingClass="rating-value-active" onSelected={this.props.onValueSelected}/>
 				));
 			} else {
 				ratingValues.push((
-					<RatingValue value={i} ratingClass="rating-value" onSelected={this.props.onValueSelected}/>
+					<RatingValue key={'rate-val-'+i} value={i} ratingClass="rating-value" onSelected={this.props.onValueSelected}/>
 				));
 			}
 		}

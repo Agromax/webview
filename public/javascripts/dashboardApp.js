@@ -6,7 +6,10 @@ var LeftPanel = React.createClass({
 
 		versions.forEach(function(v) {
 			actions.push(
-				<li role="presentation" key={v["_id"]} className={self.props.selected === v["_id"] ? 'active': ''}>
+				<li 
+					role="presentation" 
+					key={v["_id"]} 
+					className={self.props.selected === v["_id"] ? 'active': ''}>
 					<a href="#" onClick={self.props.onVersionSelected}>{v["_id"]}</a>
 				</li>
 			);
@@ -15,7 +18,7 @@ var LeftPanel = React.createClass({
 		return (
 			<div>
 				<ul className="nav nav-pills nav-stacked">
-					<li role="presentation" className="help">Given below is the list of all the versions available. Please select a version to grade. Please note that this page is intended to be used by a domain expert only</li>
+					<li role="presentation" className="help" key='Message'>Given below is the list of all the versions available. Please select a version to grade. Please note that this page is intended to be used by a domain expert only</li>
 					{actions}
 				</ul>
 			</div>
@@ -81,16 +84,16 @@ var Triple = React.createClass({
 		this.setState({feedback: feedback});
 	},
 	render: function() {
-		var self = this;
-		var t = this.props.triple;
+		var self = this;									// For reasons untold
+		var t = this.props.triple;							// Triple to be rendered
 		var grade = t.grades.find(function(g) {
-			if(g.user) {
+			if(g.user) {									// Find the grading by the current Domain Expert(DE)
 				return g.user.toString() === self.props.user.id.toString(); 
 			}
 			return false;
 		}) || {};
 
-		var level = grade.value || -1;
+		var level = grade.value || -1;						// Grade level assigned by the DE
 
 		return (
 			<div className="panel panel-default">
@@ -155,6 +158,7 @@ var RightPanel = React.createClass({
 				<Triple 
 					triple={this.props.triplets[i]} 
 					id={this.props.triplets[i]['_id']} 
+					key={this.props.triplets[i]['_id']}
 					version={this.props.version}
 					user={this.props.user}
 				/>

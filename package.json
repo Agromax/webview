@@ -14,12 +14,14 @@
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "express-ws": "^2.0.0-rc.1",
+    "github": "^1.1.0",
     "jade": "^1.11.0",
     "mongodb": "^2.1.18",
     "mongoose": "^4.4.19",
     "mysql": "^2.10.2",
     "promise": "^7.1.1",
     "random-js": "^1.0.8",
+    "request": "^2.72.0",
     "sequelize": "^3.23.0",
     "serve-favicon": "^2.3.0"
   }
