@@ -81,7 +81,7 @@ var BarChart = React.createClass({
 			var width = data[grade] + '%';
 			var style = {width: width, backgroundColor: '#70DB93'};
 			bars.push(
-				<div className="form-group">
+				<div className="form-group" key={'grade-level-' + grade}>
 					<label className="control-label col-sm-2 align-right">{'Grade ' + grade}</label>
 					<div className="col-sm-10">
 						<div className="progress">
