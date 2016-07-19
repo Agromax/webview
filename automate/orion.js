@@ -138,7 +138,6 @@ function handleCommand(cmd, rl) {
 			break;
 		case 'load':
 			rl.question('[orion-cl] the file path: ', (p) => {
-				loadTriplets(p);
 			});
 			break;
 		case 'exit':

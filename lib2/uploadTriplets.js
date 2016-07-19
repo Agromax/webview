@@ -41,4 +41,4 @@ function upload(filePath) {
 	});
 }
 
-upload(path.join(__dirname, "data.json"));
+upload(path.join(__dirname, "json_data", "test.json"));
