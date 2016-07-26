@@ -100,3 +100,22 @@ textarea {
 	color: #787878;
 	/*text-transform: uppercase;*/
 }
+
+
+.triple_t {
+	padding: 4px;
+	border: none;
+	border-bottom: solid 4px #70DB93; 
+}
+
+@keyframes hori {
+    from {background-color: #FFF;}
+    to {background-color: #EBEBEB;}
+}
+
+.triple_t:focus {
+	/*border-bottom: solid 4px #70D5FF;*/
+	border-radius: 4px;
+	background-color: #EBEBEB;
+	/*border: solid 4px #EBEBEB;*/
+}

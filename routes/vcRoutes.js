@@ -144,6 +144,130 @@ router.post('/grade', function(req, res, next ) {
 });
 
 
+router.post('/sub', function(req, res, next) {
+	var VC = Schema.VersionControl;
+	var User = Schema.User;
+
+	var versionId = req.body.version;
+	var tripleId = req.body.triple;
+	var sub = req.body.sub;
+
+	if(req.session.payload) {
+		var user = req.session.payload;
+		VC.findById(versionId, function(err, version) {
+			if(err) {
+				console.error(err);
+				return res.json({
+					code: -1,
+					msg: err
+				});
+			}
+			var triple = version.triplets.id(tripleId);
+			triple.sub = sub;
+
+			version.save(function(err, v) {
+				if(err) {
+					res.json({
+						code: -1,
+						msg: err
+					});
+					return;
+				}
+				res.json({
+					code: 0,
+					msg: 'Subject of triple with id=' + triple.id + ' updated to:' + sub  
+				});
+			});
+		});
+	} else {
+		res.redirect('/app');
+	}
+
+});
+
+router.post('/pre', function(req, res, next) {
+	var VC = Schema.VersionControl;
+	var User = Schema.User;
+
+	var versionId = req.body.version;
+	var tripleId = req.body.triple;
+	var pre = req.body.pre;
+
+	if(req.session.payload) {
+		var user = req.session.payload;
+		VC.findById(versionId, function(err, version) {
+			if(err) {
+				console.error(err);
+				return res.json({
+					code: -1,
+					msg: err
+				});
+			}
+			var triple = version.triplets.id(tripleId);
+			triple.pre = pre;
+
+			version.save(function(err, v) {
+				if(err) {
+					res.json({
+						code: -1,
+						msg: err
+					});
+					return;
+				}
+				res.json({
+					code: 0,
+					msg: 'Predicate of triple with id=' + triple.id + ' updated to:' + pre  
+				});
+			});
+		});
+	} else {
+		res.redirect('/app');
+	}
+
+});
+
+
+router.post('/obj', function(req, res, next) {
+	var VC = Schema.VersionControl;
+	var User = Schema.User;
+
+	var versionId = req.body.version;
+	var tripleId = req.body.triple;
+	var obj = req.body.obj;
+
+	if(req.session.payload) {
+		var user = req.session.payload;
+		VC.findById(versionId, function(err, version) {
+			if(err) {
+				console.error(err);
+				return res.json({
+					code: -1,
+					msg: err
+				});
+			}
+			var triple = version.triplets.id(tripleId);
+			triple.obj = obj;
+
+			version.save(function(err, v) {
+				if(err) {
+					res.json({
+						code: -1,
+						msg: err
+					});
+					return;
+				}
+				res.json({
+					code: 0,
+					msg: 'Object of triple with id=' + triple.id + ' updated to:' + obj  
+				});
+			});
+		});
+	} else {
+		res.redirect('/app');
+	}
+
+});
+
 /**
 Updates the feedback given by the domain expert on the given triple
 */

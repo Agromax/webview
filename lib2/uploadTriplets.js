@@ -1,6 +1,7 @@
 var path = require('path');
 var Schema = require('../lib2/schema');
 var fs = require('fs');
+const readline = require('readline');
 
 var Triplet = Schema.Triplet;
 var VC = Schema.VersionControl;
@@ -41,4 +42,15 @@ function upload(filePath) {
 	});
 }
 
-upload(path.join(__dirname, "json_data", "test.json"));
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+rl.question('Name of the file: ', (answer) => {
+	upload(path.join(__dirname, "json_data", answer));
+  	rl.close();
+});
+
+// upload(path.join(__dirname, "json_data", "ricey.json"));
+

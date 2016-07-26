@@ -29,7 +29,7 @@ var LeftPanel = React.createClass({
 
 var Triple = React.createClass({
 	getInitialState: function() {
-		return {feedback: ''};
+		return {feedback: '', sub: '', pre: '', obj: ''};
 	},
 	handleFeedbackChange: function(e) {
 		this.setState({feedback: e.target.value});
@@ -50,6 +50,72 @@ var Triple = React.createClass({
 				console.error(data.msg);
 			}
 		});
+	},
+	handleSubChange: function(e) {
+		var sub = e.target.value;
+		this.setState({
+			sub: sub
+		});
+		var tripleId = this.props.id;
+		var versionId = this.props.version; 
+
+		if(sub && sub.length > 0) {
+			$.post('http://localhost:3000/vc/sub', {
+				triple: tripleId,
+				version: versionId,
+				sub: sub
+			}, function(data) {
+				if(data.code === 0 ) {
+					console.log(data.msg);
+				} else {
+					console.error(data.msg);
+				}
+			});
+		}
+	},
+	handlePreChange: function(e) {
+		var pre = e.target.value;
+		this.setState({
+			pre: pre
+		});
+		var tripleId = this.props.id;
+		var versionId = this.props.version; 
+
+		if(pre && pre.length > 0) {
+			$.post('http://localhost:3000/vc/pre', {
+				triple: tripleId,
+				version: versionId,
+				pre: pre
+			}, function(data) {
+				if(data.code === 0 ) {
+					console.log(data.msg);
+				} else {
+					console.error(data.msg);
+				}
+			});
+		}
+	},
+	handleObjChange: function(e) {
+		var obj = e.target.value;
+		this.setState({
+			obj: obj
+		});
+		var tripleId = this.props.id;
+		var versionId = this.props.version; 
+
+		if(obj && obj.length > 0) {
+			$.post('http://localhost:3000/vc/obj', {
+				triple: tripleId,
+				version: versionId,
+				obj: obj
+			}, function(data) {
+				if(data.code === 0 ) {
+					console.log(data.msg);
+				} else {
+					console.error(data.msg);
+				}
+			});
+		}
 	},
 	handleSave: function(e) {
 		var tripleId = this.props.id;
@@ -81,7 +147,12 @@ var Triple = React.createClass({
 		}) || {};
 
 		var feedback = grade.feedback || '';
-		this.setState({feedback: feedback});
+		this.setState({
+			feedback: feedback, 
+			sub: t.sub,
+			pre: t.pre,
+			obj: t.obj
+		});
 	},
 	render: function() {
 		var self = this;									// For reasons untold
@@ -108,9 +179,9 @@ var Triple = React.createClass({
 										    <label className="control-label col-sm-2" for="">Triple</label>
 										    <div className="col-sm-10">
 										    	<div className="row">
-											    	<div className="col-sm-4">{t.sub}</div>
-													<div className="col-sm-4">{t.pre}</div>
-													<div className="col-sm-4">{t.obj}</div>
+											    	<div className="col-sm-4"><input type="text" value={this.state.sub} onChange={this.handleSubChange} className="triple_t"/></div>
+													<div className="col-sm-4"><input type="text" value={this.state.pre} onChange={this.handlePreChange} className="triple_t"/></div>
+													<div className="col-sm-4"><input type="text" value={this.state.obj} onChange={this.handleObjChange} className="triple_t"/></div>
 												</div>
 										    </div>
 										</div>
